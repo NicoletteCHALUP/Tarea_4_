@@ -1,12 +1,70 @@
+<!DOCTYPE html>
 <html>
-  <body>
-    <form id="hola">
+<head>
+  <title>Hola App</title>
+</head>
+<body>
+  <form id="hola">
     <h1>Hola</h1>
     <label for="nombre">Ingresa tu Nombre:</label>
     <input type="text" id="name"/>
-    <input type="submit" value="boton" id="button" />
+    <label for="genero">Ingresa tu género: Masculino o Femenino:</label>
+    <input type="text" id="gender"/>
+    <label for="edad">Ingresa tu Edad:</label>
+    <input type="text" id="years"/>
+    <label for="idioma">Selecciona tu idioma: Español o Inglés:</label>
+    <select id="language">
+      <option value="es">Español</option>
+      <option value="en">Inglés</option>
+    </select>
+    <input type="submit" value="Enviar" id="button" />
   </form>
   <p>Hola: </p><div id="resultado-div"></div>
-  <script type="module" src="./src/index.js"></script>
-  </body>
+  <script>
+    const nombre = document.querySelector("#name");
+    const genero = document.querySelector("#gender");
+    const edad = document.querySelector("#years");
+    const idioma = document.querySelector("#language");
+    const form = document.querySelector("#hola");
+    const div = document.querySelector("#resultado-div");
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const nombre2 = nombre.value;
+        const genero2 = genero.value;
+        const edad2 = parseInt(edad.value);
+        const idiomaSeleccionado = idioma.value;
+
+        let saludo = idiomaSeleccionado === "es" ? "Hola" : "Hello";
+
+        if (genero2 === "Masculino") {
+            if (edad2 > 30) {
+                saludo = "Hola señor";
+            } else {
+                saludo = "Hola jovencito";
+            }
+        } else if (genero2 === "Femenino") {
+            if (edad2 > 30) {
+                saludo = "Hola señora";
+            } else {
+                saludo = "Hola jovencita";
+            }
+        }
+       const horaActual = new Date().getHours();
+       if (horaActual >= 5 && horaActual < 12) {
+            saludo += idiomaSeleccionado === "es" ? ", buen día" : ", good morning";
+        } else if (horaActual >= 12 && horaActual < 18) {
+            saludo += idiomaSeleccionado === "es" ? ", buenas tardes" : ", good afternoon";
+        } else {
+            saludo += idiomaSeleccionado === "es" ? ", buenas noches" : ", good evening";
+        }
+
+        div.innerHTML = "<p>" + nombre2 + "</p>";
+
+        const saludoDiv = document.createElement("p");
+        saludoDiv.textContent = saludo;
+        div.appendChild(saludoDiv);
+    });
+  </script>
+</body>
 </html>
